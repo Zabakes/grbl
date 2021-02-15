@@ -230,6 +230,9 @@ uint8_t gc_execute_line(char *line)
             if (mantissa != 0) { FAIL(STATUS_GCODE_UNSUPPORTED_COMMAND); } // [G61.1 not supported]
             // gc_block.modal.control = CONTROL_MODE_EXACT_PATH; // G61
             break;
+
+          //CAN ADD ADDITIONAL G-Codes here
+
           default: FAIL(STATUS_GCODE_UNSUPPORTED_COMMAND); // [Unsupported G command]
         }
         if (mantissa > 0) { FAIL(STATUS_GCODE_COMMAND_VALUE_NOT_INTEGER); } // [Unsupported or invalid Gxx.x command]
@@ -260,6 +263,13 @@ uint8_t gc_execute_line(char *line)
               case 5: gc_block.modal.spindle = SPINDLE_DISABLE; break;
             }
             break;
+
+          //CAN ADD ADDITIONAL M-Codes here
+
+          case 104:
+            //TODO Heat UP base on https://github.com/Duet3D/RepRapFirmware/tree/dev/src/Heating ? not using reprap b/c using C
+          break;
+
           #ifdef ENABLE_M7
             case 7: case 8: case 9:
           #else
@@ -864,6 +874,8 @@ uint8_t gc_execute_line(char *line)
     if (status == STATUS_OK) { memcpy(gc_state.position, gc_block.values.xyz, sizeof(gc_block.values.xyz)); }
     return(status);
   }
+
+  //Here we need to make actual calls to funtions that execute heating/other functions based on flags set in interpretation step
   
   // If in laser mode, setup laser power based on current and past parser conditions.
   if (bit_istrue(settings.flags,BITFLAG_LASER_MODE)) {

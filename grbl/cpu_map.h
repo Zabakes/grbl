@@ -250,6 +250,9 @@
 #endif
 
 /*
+
+TODO do this for mega
+
 #ifdef CPU_MAP_CUSTOM_PROC
   // For a custom pin map or different processor, copy and edit one of the available cpu
   // map files and modify it to your needs. Make sure the defined name is also changed in
